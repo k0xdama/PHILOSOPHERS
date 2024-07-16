@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/17 20:08:00 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/07/16 18:39:20 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <errno.h>
+# include <sys/time.h>
+# include <threads.h>
+# include <pthread.h>
 
 
 typedef struct s_data
@@ -28,11 +31,25 @@ typedef struct s_data
 	unsigned int	tt_eat;
 	unsigned int	tt_sleep;
 	unsigned int	must_eat;
+	size_t			start;
 }	t_data;
+
+typedef struct s_fork
+{
+	int		available;
+	pthread_mutex_t lock;
+}	t_fork;
+
+typedef struct s_philo
+{
+	pthread_t	th;
+	int			id;
+	t_data		*data
+}	t_philo;
 
 void	init_and_fill_struct(t_data *data, int argc, char **argv);
 int		ft_isdigit(int c);
-int		ft_atoi(const char *str, int *error);
+int		ft_mini_atoi(const char *str);
 
 
 
