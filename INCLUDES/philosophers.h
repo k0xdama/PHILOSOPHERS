@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/07/16 18:39:20 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:32:02 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include <threads.h>
 # include <pthread.h>
+# include <stdbool.h>
 
 
 typedef struct s_data
@@ -42,14 +43,21 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	pthread_t	th;
-	int			id;
-	t_data		*data
+	pthread_t		th;
+	int				id;
+	unsigned int	meals_count;
+	bool			eating;
+	t_data			*data
 }	t_philo;
 
 void	init_and_fill_struct(t_data *data, int argc, char **argv);
 int		ft_isdigit(int c);
 int		ft_mini_atoi(const char *str);
+
+//tableau de fork
+//tableau de philos
+//bool isdead
+//
 
 
 
