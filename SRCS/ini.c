@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/01 20:07:37 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/03 19:37:15 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ static t_philo	**init_philos(t_data *data)
 	while (i <= data->nb_philo)
 	{
 		philo[i].id = i + 1;
-		philo[i].fork_left = 0;
-		philo[i].fork_right = 0;
+		philo[i].first_fork = 0;
+		philo[i].second_fork = 0;
+		philo[i].last_meal = 0;
 		philo[i].meals_count = 0;
 		philo[i].eating = false;
+		philo[i].is_starving = false;
 		philo[i].is_dead = false;
 		philo[i].data = data;
 		i++;
@@ -61,8 +63,8 @@ void	assign_fork_to_each_philos(t_data *data, t_philo **ph_tab)
 	nb_fork = data->nb_philo;
 	while (i < data->nb_philo)
 	{
-		ph_tab[i]->fork_left = ph_tab[i]->id;
-		ph_tab[i]->fork_right = (ph_tab[i]->id + 1) % nb_fork;
+		ph_tab[i]->first_fork = ph_tab[i]->id;
+		ph_tab[i]->second_fork = (ph_tab[i]->id + 1) % nb_fork;
 		i++;
 	}
 }

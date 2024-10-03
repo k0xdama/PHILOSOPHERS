@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/01 20:18:17 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/03 21:04:49 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,23 @@ typedef struct s_data
 	unsigned int	tt_sleep;
 	unsigned int	must_eat;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	meal;
+	pthread_mutex_t	dead;
 	pthread_mutex_t	write;
 	size_t			start;
+	bool			stop_flag;
 }	t_data;
 
 typedef struct s_philo
 {
 	pthread_t		th;
 	int				id;
-	unsigned int	fork_left;
-	unsigned int	fork_right;
+	unsigned int	first_fork;
+	unsigned int	second_fork;
+	unsigned int	last_meal;
 	unsigned int	meals_count;
 	bool			eating;
+	bool			is_starving;
 	bool			is_dead;
 	t_data			*data;
 }	t_philo;
@@ -71,15 +76,22 @@ typedef struct s_checker
 
 
 // INITIALISATION //
-void	init_struct_and_philos(t_data *data, t_philo **philo_tab, int argc, char **argv);
-
-// UTILITAIRES //
-int		ft_isdigit(int c);
-int		ft_mini_atoi(const char *str);
-void	clean_exit(t_data *data, t_philo **ph_tab, char *err, int exit_code);
+void			init_struct_and_philos(t_data *data, t_philo **philo_tab, int argc, char **argv);
 
 // SIMULATION //
-void	start(t_data *data, t_philo **philos);
+void			start(t_data *data, t_philo **philos);
+
+//ACTIONS
+void			eat(t_philo *ph);
+void			ft_dodo(t_philo *philo, unsigned int time);
+void			think(t_philo *ph);
+
+// UTILITAIRES //
+void			write_action(t_data *data, t_philo *ph, char *str);
+unsigned int	get_timestamp(void);
+int				ft_isdigit(int c);
+int				ft_mini_atoi(const char *str);
+void			clean_exit(t_data *data, t_philo **ph_tab, char *err, int exit_code);
 
 
 

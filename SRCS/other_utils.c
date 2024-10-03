@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:39:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/01 20:19:33 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/03 18:17:45 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	write_action(t_data *data, t_philo *ph, char *str)
 	pthread_mutex_unlock(&data->write);
 }
 
-size_t	get_timestamp(void)
+unsigned int	get_timestamp(void)
 {
 	struct timeval	t;
 

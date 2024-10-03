@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:19:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/07/16 19:47:42 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/03 21:02:32 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 void	think(t_philo *ph)
 {
-	write_action("is thinking", ph);
+	write_action(ph->data, ph, PRINT_THINKING);
 }
 
-void	doze(t_philo *ph)
+void	ft_dodo(t_philo *ph, unsigned int time)
 {
-	write_action("is sleeping", ph);
-	ft_usleep(ph->data->tt_sleep);
+	unsigned int time_stamp_when_called;
+
+	time_stamp_when_called = get_timestamp();
+	write_action(ph->data, ph, PRINT_SLEEPING);
+	while (time_stamp_when_called + time < get_timestamp())
+		usleep(50);
 }
 
 void	eat(t_philo *ph)
 {
-	
+	write_action(ph->data, ph, PRINT_EATING);
+	pthread_mutex_lock(&ph->data->meal);
+	ph->last_meal = get_timestamp();
+	pthread_mutex_unlock(&ph->data->meal);
+	ft_dodo(ph, ph->data->tt_eat);
+	think(ph);
 }
