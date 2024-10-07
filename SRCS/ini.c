@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/06 02:47:30 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 01:05:12 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static	void	assign_fork_to_each_philos(t_data *data, t_philo **ph_tab)
 {
-	int	i;
-	unsigned int nb_fork;
+	unsigned int	i;
+	unsigned int 	nb_fork;
 
 	i = 0;
 	nb_fork = data->nb_philos;
@@ -33,9 +33,9 @@ static 	int	init_others_mutex(t_data *data)
 		return (cleaner(data, FAILURE, ERR_INIT_MUTEX));
 	if (pthread_mutex_init(&data->write, NULL) != 0)
 		return (cleaner(data, FAILURE, ERR_INIT_MUTEX));
-	if (pthread_mutex_init(&data->stop_flag, NULL) != 0)
+	if (pthread_mutex_init(&data->stop, NULL) != 0)
 		return (cleaner(data, FAILURE, ERR_INIT_MUTEX));
-	return (SUCCESS)
+	return (SUCCESS);
 }
 
 static	int	fill_struct(t_data *data, int argc, char **argv)
@@ -51,8 +51,8 @@ static	int	fill_struct(t_data *data, int argc, char **argv)
 		data->must_eat = (unsigned int)ft_mini_atoi(argv[5]);
 	data->forks = malloc(data->nb_philos * sizeof(pthread_mutex_t));
 	if (data->forks == NULL)
-		return (err_msg(ERR_MALLOC), FAILURE);
-	while (i < data->nb_philos)
+		return (msg_err(ERR_MALLOC), FAILURE);
+	while (i < (int)data->nb_philos)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
@@ -60,34 +60,35 @@ static	int	fill_struct(t_data *data, int argc, char **argv)
 				pthread_mutex_destroy(&data->forks[i--]);
 			free(data->forks);
 			data->forks = NULL;
-			return (err_msg(ERR_INIT_MUTEX), FAILURE);
+			return (msg_err(ERR_INIT_MUTEX), FAILURE);
 		}
 	}
 	return (init_others_mutex(data));
 }
 
-static t_philo	**init_philos(t_data *data)
+static t_philo	*init_philos(t_data *data)
 {
-	t_philo philo[data->nb_philos];
+	t_philo philos[data->nb_philos];
 	unsigned int	i;
 
 	i = 0;
 	while (i <= data->nb_philos)
 	{
-		philo[i].id = i + 1;
-		philo[i].first_fork = 0;
-		philo[i].second_fork = 0;
-		philo[i].last_meal = 0;
-		philo[i].meals_count = 0;
-		philo[i].eating = false;
-		philo[i].is_starving = false;
-		philo[i].is_dead = false;
-		philo[i].data = data;
+		philos[i].id = i + 1;
+		philos[i].first_fork = 0;
+		philos[i].second_fork = 0;
+		philos[i].last_meal = 0;
+		philos[i].meals_count = 0;
+		philos[i].eating = false;
+		philos[i].is_starving = false;
+		philos[i].is_dead = false;
+		philos[i].data = data;
 		i++;
 	}
+	return (philos);
 }
 
-int	init_structs_and_philos(t_data *data, t_philo **philos_tab, int argc, char **argv)
+int	init_structs_and_philos(t_data *data, int argc, char **argv)
 {	
 	data->ph_tab = NULL;
 	data->nb_philos = 0;
@@ -98,8 +99,8 @@ int	init_structs_and_philos(t_data *data, t_philo **philos_tab, int argc, char *
 	data->tt_sleep = 0;
 	data->must_eat = -1;
 	if (checks_args(argv) == -1)
-		return (err_msg(ERR_BAD_ARGS), NULL);
-	philos_tab = init_philos(data);
+		return (msg_err(ERR_BAD_ARGS), FAILURE);
+	data->ph_tab = init_philos(data);
 	data->ph_tab = philos_tab;
 	if (fill_struct(data, argc, argv) == FAILURE)
 		return (FAILURE);

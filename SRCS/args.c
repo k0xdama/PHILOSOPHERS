@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ini_utils.c                                        :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 20:36:01 by pmateo            #+#    #+#             */
-/*   Updated: 2024/09/30 22:21:11 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 00:59:51 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_mini_atoi(const char *str)
 	return (result);
 }
 
-static int	checks_args(char **argv)
+int	checks_args(char **argv)
 {
 	int	i;
 	int	j;
