@@ -6,23 +6,25 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 01:05:12 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:48:05 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/philosophers.h"
 
-static	void	assign_fork_to_each_philos(t_data *data, t_philo **ph_tab)
+static	void	assign_fork_to_each_philos(t_data *data)
 {
 	unsigned int	i;
 	unsigned int 	nb_fork;
+	t_philo			**philos_tab;
 
 	i = 0;
 	nb_fork = data->nb_philos;
+	philos_tab = data->ph_tab;
 	while (i < data->nb_philos)
 	{
-		ph_tab[i]->first_fork = ph_tab[i]->id;
-		ph_tab[i]->second_fork = (ph_tab[i]->id + 1) % nb_fork;
+		philos_tab[i]->first_fork = philos_tab[i]->id;
+		philos_tab[i]->second_fork = (philos_tab[i]->id + 1) % nb_fork;
 		i++;
 	}
 }
@@ -66,31 +68,29 @@ static	int	fill_struct(t_data *data, int argc, char **argv)
 	return (init_others_mutex(data));
 }
 
-static t_philo	*init_philos(t_data *data)
+static	void	init_philos(t_data *data)
 {
-	t_philo philos[data->nb_philos];
 	unsigned int	i;
 
 	i = 0;
 	while (i <= data->nb_philos)
 	{
-		philos[i].id = i + 1;
-		philos[i].first_fork = 0;
-		philos[i].second_fork = 0;
-		philos[i].last_meal = 0;
-		philos[i].meals_count = 0;
-		philos[i].eating = false;
-		philos[i].is_starving = false;
-		philos[i].is_dead = false;
-		philos[i].data = data;
+		data->ph_tab[i]->id = i + 1;
+		data->ph_tab[i]->first_fork = 0;
+		data->ph_tab[i]->second_fork = 0;
+		data->ph_tab[i]->last_meal = 0;
+		data->ph_tab[i]->meals_count = 0;
+		data->ph_tab[i]->eating = false;
+		data->ph_tab[i]->is_starving = false;
+		data->ph_tab[i]->is_dead = false;
+		data->ph_tab[i]->data = data;
 		i++;
 	}
-	return (philos);
 }
 
 int	init_structs_and_philos(t_data *data, int argc, char **argv)
 {	
-	data->ph_tab = NULL;
+	data->ph_tab = malloc(data->nb_philos * sizeof(t_philo));
 	data->nb_philos = 0;
 	data->initialized_th = 0;
 	data->finished_th = 0;
@@ -100,10 +100,9 @@ int	init_structs_and_philos(t_data *data, int argc, char **argv)
 	data->must_eat = -1;
 	if (checks_args(argv) == -1)
 		return (msg_err(ERR_BAD_ARGS), FAILURE);
-	data->ph_tab = init_philos(data);
-	data->ph_tab = philos_tab;
+	init_philos(data);
 	if (fill_struct(data, argc, argv) == FAILURE)
 		return (FAILURE);
-	assign_fork_to_each_philos(data, philos_tab);
+	assign_fork_to_each_philos(data);
 	return (SUCCESS);
 }

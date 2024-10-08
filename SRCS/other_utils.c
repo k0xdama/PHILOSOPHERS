@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:39:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/06 02:47:17 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:52:37 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static	void	destroy_others_mutex(t_data *data)
 
 static	void	destroy_forks(t_data *data)
 {
-	int	i;
+	unsigned	int	i;
 
 	i = 0;
 	while (i < data->nb_philos)

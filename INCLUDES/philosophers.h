@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 01:05:05 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:50:20 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ typedef struct s_philo
 typedef struct s_data
 {
 	bool			stop_flag;
-	t_philo			*ph_tab;
+	t_philo			**ph_tab;
 	unsigned int	nb_philos;
 	unsigned int	initialized_th;
 	unsigned int	finished_th;
 	unsigned int	tt_die;
 	unsigned int	tt_eat;
 	unsigned int	tt_sleep;
-	unsigned int	must_eat;
+	int				must_eat;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	stop;

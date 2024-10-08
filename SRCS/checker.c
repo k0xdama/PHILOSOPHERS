@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/06 02:52:02 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 12:51:52 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	void	kill(t_checker *checker, t_philo *philo)
 
 static	void	monitor_time_to_die(t_checker *checker)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < checker->data->nb_philos)
@@ -78,7 +78,6 @@ static	int	wait_for_philos(t_checker *checker)
 
 void	*checker_routine(void *ptr)
 {
-	int			i;
 	t_checker	*checker;
 
 	checker = ptr;
