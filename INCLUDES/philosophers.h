@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 12:50:20 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/09 13:45:04 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ typedef struct s_checker
 {
 	pthread_t		th;
 	t_data			*data;
-	t_philo			**ph_tab;
+	t_philo			*ph_tab;
 }	t_checker;
 
 
 // INITIALISATION //
-int				init_struct_and_philos(t_data *data, int argc, char **argv);
+int				init_structs_and_philos(t_data *data, int argc, char **argv);
 
 // SIMULATION //
 void			*philos_routine(void *ptr);
@@ -102,6 +102,9 @@ int				ft_mini_atoi(const char *str);
 int				checks_args(char **argv);
 void			msg_err(char *err);
 int				cleaner(t_data *data, int sim_exit_code, char *err);
+
+// EXT_UTILS //
+int	ft_strcmp(const char *s1, const char *s2);
 
 
 

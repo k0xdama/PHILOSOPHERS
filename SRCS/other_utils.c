@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:39:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 12:52:37 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/08 14:34:16 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static	void	destroy_forks(t_data *data)
 void	msg_err(char *err)
 {
 	printf("ERROR : %s\n", err);
-	if (err == ERR_BAD_ARGS)
+	if (ft_strcmp(err, ERR_BAD_ARGS) == 0)
 	{
 		printf("Usage :\n./philo [nb_of_philosophers (200 max)] [time_to_die] [time_to_eat]");
 		printf("[time_to_sleep] [number_of_times_each_philosopher_must_eat]\n");

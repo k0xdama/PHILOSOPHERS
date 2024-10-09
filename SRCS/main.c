@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:37:37 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 01:25:02 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/09 13:44:06 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static	void	create_checker(t_data *data, t_checker *checker, t_philo **philos)
 {
 	checker->data = data;
 	checker->ph_tab = philos;
-	if (pthread_create(&checker->th, NULL, &checker_routine, &checker) != 0)
+	if (pthread_create(&checker->th, NULL, &checker_routine, checker) != 0)
 			cleaner(data, FAILURE, ERR_CREATE_THREAD);
 
 }
 
-static	void	create_philo(t_data *data, t_philo *philo)
+static	void	create_philo(t_data *data, t_philo philo)
 {
-	if (pthread_create(&philo->th, NULL, &philos_routine, &philo) != 0)
+	if (pthread_create(&philo.th, NULL, &philos_routine, &philo) != 0)
 			cleaner(data, FAILURE, ERR_CREATE_THREAD);
 }
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 {
 	t_data data;
 	
-	if (argc != 5 || argc != 6)
+	if (argc < 5 || argc > 6)
     {
         printf("Usage :\n");
 		printf("./philo [nb_of_philosophers (200 max)] [time_to_die]");
@@ -66,8 +66,10 @@ int main(int argc, char **argv)
 		printf("NB : The last one is optional\n");
 		exit(EXIT_FAILURE);
     }
-	if (init_struct_and_philos(&data, argc, argv) == FAILURE)
+	if (init_structs_and_philos(&data, argc, argv) == FAILURE)
 		return (FAILURE);
+	printf("data ??? nb_philos : %d\n", data.nb_philos);
+	printf("phtab ? nb_philos : %d\n", data.ph_tab[0]->id);
 	start(&data);
 	while (true)
 	{

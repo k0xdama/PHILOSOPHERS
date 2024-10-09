@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 12:48:05 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/09 13:00:40 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static	int	fill_struct(t_data *data, int argc, char **argv)
 			data->forks = NULL;
 			return (msg_err(ERR_INIT_MUTEX), FAILURE);
 		}
+		i++;
 	}
 	return (init_others_mutex(data));
 }
@@ -73,8 +74,9 @@ static	void	init_philos(t_data *data)
 	unsigned int	i;
 
 	i = 0;
-	while (i <= data->nb_philos)
+	while (i < data->nb_philos)
 	{
+		data->ph_tab[i] = malloc(sizeof(t_philo));
 		data->ph_tab[i]->id = i + 1;
 		data->ph_tab[i]->first_fork = 0;
 		data->ph_tab[i]->second_fork = 0;
@@ -100,9 +102,9 @@ int	init_structs_and_philos(t_data *data, int argc, char **argv)
 	data->must_eat = -1;
 	if (checks_args(argv) == -1)
 		return (msg_err(ERR_BAD_ARGS), FAILURE);
-	init_philos(data);
 	if (fill_struct(data, argc, argv) == FAILURE)
 		return (FAILURE);
+	init_philos(data);
 	assign_fork_to_each_philos(data);
 	return (SUCCESS);
 }

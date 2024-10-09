@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/06 02:33:25 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/09 12:42:48 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	*philos_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = ptr;
+	printf("is dead : %d", philo->is_dead);
+	printf("stop_flag : %d", philo->data->stop_flag);
 	if (wait_other_threads(philo) == FAILURE)
 		return (philo->data->finished_th++, NULL);
 	starting_routine(philo);
