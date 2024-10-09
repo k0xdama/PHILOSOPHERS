@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+         #
+#    By: jdenis <jdenis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/14 22:33:09 by pmateo            #+#    #+#              #
-#    Updated: 2024/10/08 14:51:45 by pmateo           ###   ########.fr        #
+#    Updated: 2024/10/09 16:52:33 by jdenis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -Werror -Wextra -Wall -g -g3 -fsanitize=thread
+FLAGS = -Werror -Wextra -Wall -g -g3
 RM = rm -f
 .DEFAULT_GOAL := all
 

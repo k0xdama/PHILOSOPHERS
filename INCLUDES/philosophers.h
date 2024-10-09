@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdenis <jdenis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/09 13:45:04 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/09 17:13:43 by jdenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	bool			stop_flag;
-	t_philo			**ph_tab;
+	t_philo			ph_tab[300];
 	unsigned int	nb_philos;
 	unsigned int	initialized_th;
 	unsigned int	finished_th;
@@ -78,7 +78,7 @@ typedef struct s_checker
 {
 	pthread_t		th;
 	t_data			*data;
-	t_philo			*ph_tab;
+	t_philo			**ph_tab;
 }	t_checker;
 
 

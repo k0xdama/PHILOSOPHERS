@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdenis <jdenis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 12:51:52 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/09 17:09:46 by jdenis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static	void	monitor_time_to_die(t_checker *checker)
 	while (i < checker->data->nb_philos)
 	{
 		pthread_mutex_lock(&checker->data->meal);
-		if (checker->data->ph_tab[i]->last_meal >= checker->data->tt_die)
+		if (checker->data->ph_tab[i].last_meal >= checker->data->tt_die)
 		{
 			pthread_mutex_unlock(&checker->data->meal);
 			kill(checker, checker->ph_tab[i]);
