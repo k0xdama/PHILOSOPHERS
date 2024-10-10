@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philosophers_bis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/10 18:28:53 by pmateo           ###   ########.fr       */
+/*   Created: 2024/10/10 19:31:53 by pmateo            #+#    #+#             */
+/*   Updated: 2024/10/10 19:59:01 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,50 +40,20 @@
 # define PRINT_TOOK_FORK "has taken a fork"
 # define PRINT_DIED "died"
 
-typedef struct s_data t_data;
-
-typedef struct s_philo
-{
-	pthread_t		th;
-	int				id;
-	unsigned int	first_fork;
-	unsigned int	second_fork;
-	unsigned int	last_meal;
-	unsigned int	meals_count;
-	bool			eating;
-	bool			is_starving;
-	bool			is_dead;
-	t_data			*data;
-}	t_philo;
-
 typedef struct s_data
 {
 	bool			stop_flag;
-	t_philo			ph_tab[300];
-	unsigned int	nb_philos;
+	pthread_t		*threads_tab;
+	unsigned int	nb_th;
 	unsigned int	initialized_th;
 	unsigned int	finished_th;
-	unsigned int	tt_die;
-	unsigned int	tt_eat;
-	unsigned int	tt_sleep;
-	int				must_eat;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	meal;
-	pthread_mutex_t	stop;
 	pthread_mutex_t	write;
+	pthread_mutex_t stop;
 	size_t			start;
 }	t_data;
 
-typedef struct s_checker
-{
-	pthread_t		th;
-	t_data			*data;
-	t_philo			**ph_tab;
-}	t_checker;
-
-
 // INITIALISATION //
-int				init_structs_and_philos(t_data *data, int argc, char **argv);
+int				init_structs_and_philos(t_data *data);
 
 // SIMULATION //
 void			*philos_routine(void *ptr);

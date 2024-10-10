@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdenis <jdenis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:37:37 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/09 17:16:03 by jdenis           ###   ########.fr       */
+/*   Updated: 2024/10/10 20:11:54 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static	void	detach_threads(t_data *data, t_checker *checker, t_philo *philos)
 	int	i;
 
 	i = 0;
+	(void) checker;
+	(void) philos;
 	while (i < (int)data->nb_philos)
 	{
 		if (pthread_detach(philos[i].th) != 0)
@@ -38,10 +40,12 @@ static	void	create_checker(t_data *data, t_checker *checker, t_philo *philos)
 
 static	void	create_philo(t_data *data, t_philo *philo)
 {
+	printf("OK 1\n");
 	if (pthread_create(&philo->th, NULL, &philos_routine, philo) != 0)
 	{
 			cleaner(data, FAILURE, ERR_CREATE_THREAD);
 	}
+	printf("stats de philo : %d\n", philo->is_dead);
 }
 
 #include <string.h>
@@ -52,7 +56,6 @@ static	void	start(t_data *data)
 	t_checker	checker;
 
 	i = -1;
-	// memset(&checker, 0, sizeof(checker));
 	while (i++ < (int)data->nb_philos )
 		create_philo(data, &data->ph_tab[i]);		
 	create_checker(data, &checker, data->ph_tab);
@@ -73,8 +76,8 @@ int main(int argc, char **argv)
     }
 	if (init_structs_and_philos(&data, argc, argv) == FAILURE)
 		return (FAILURE);
-	// printf("data ??? nb_philos : %d\n", data.nb_philos);
-	// printf("phtab ? nb_philos : %d\n", data.ph_tab[0]->id);
+	printf("data ??? stop_flag : %d\n", data.stop_flag);
+	printf("phtab ? isdead : %d\n", data.ph_tab[0].is_dead);
 	start(&data);
 	while (true)
 	{

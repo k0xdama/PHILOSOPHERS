@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ini.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdenis <jdenis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/09 17:09:32 by jdenis           ###   ########.fr       */
+/*   Updated: 2024/10/10 20:11:06 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static	void	init_philos(t_data *data)
 	{
 		// data->ph_tab[i] = malloc(sizeof(t_philo));
 		// if (!data->ph_tab[i])
-			
 		data->ph_tab[i].id = i + 1;
 		data->ph_tab[i].first_fork = 0;
 		data->ph_tab[i].second_fork = 0;
@@ -96,6 +95,7 @@ static	void	init_philos(t_data *data)
 int	init_structs_and_philos(t_data *data, int argc, char **argv)
 {	
 	// data->ph_tab = malloc((ft_mini_atoi(argv[1]) + 1) * sizeof(t_philo *));
+	data->stop_flag = false;
 	data->nb_philos = 0;
 	data->initialized_th = 0;
 	data->finished_th = 0;
