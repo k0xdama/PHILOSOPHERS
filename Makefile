@@ -6,7 +6,7 @@
 #    By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/14 22:33:09 by pmateo            #+#    #+#              #
-#    Updated: 2024/10/12 03:00:14 by pmateo           ###   ########.fr        #
+#    Updated: 2024/10/12 20:24:51 by pmateo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ INCFILES = 			${DIRINC_PHILO}/philosophers.h
 
 DIR_SRCS = 			./SRCS/
 # SRCS =					main_bis.c routine_bis.c
-SRCS = 				main.c ini.c args.c actions.c routine.c checker.c \
-					other_utils.c ft_strcmp.c
+SRCS = 				main.c ini.c args.c start.c actions.c routine.c checker.c \
+					routine_utils.c others_utils.c ft_strcmp.c
 
 OBJ = ${SRCS:.c=.o}
 

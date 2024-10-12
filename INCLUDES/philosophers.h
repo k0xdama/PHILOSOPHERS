@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 04:45:34 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/12 20:48:13 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <pthread.h>
 # include <stdbool.h>
 
+// STOP REASON //
+# define END 0
+# define LAUNCH_ERROR 1
 // ERRORS //
 # define SUCCESS 0
 # define FAILURE 1
@@ -59,8 +62,11 @@ typedef struct s_philo
 typedef struct s_data
 {
 	bool			stop_flag;
+	int				stop_reason;
 	t_philo			*ph_tab;
 	unsigned int	nb_philos;
+	unsigned int	created_philos_th;
+	bool			checker_is_created;
 	unsigned int	initialized_th;
 	unsigned int	finished_th;
 	unsigned int	tt_die;
@@ -78,14 +84,16 @@ typedef struct s_checker
 {
 	pthread_t		th;
 	t_data			*data;
-	t_philo			**ph_tab;
+	t_philo			*ph_tab;
 }	t_checker;
 
 
 // INITIALISATION //
-int				init_structs_and_philos(t_data *data, int argc, char **argv);
+int				init_structs_and_philos(t_data *data, t_philo *philos_tab, int argc, char **argv);
 
 // SIMULATION //
+int				start(t_data *data, t_checker *checker);
+int				detach_threads(t_data *data, t_checker *checker, t_philo *philos);
 void			*philos_routine(void *ptr);
 void			*checker_routine(void *ptr);
 
@@ -105,7 +113,7 @@ void			msg_err(char *err);
 int				cleaner(t_data *data, int sim_exit_code, char *err);
 
 // EXT_UTILS //
-int	ft_strcmp(const char *s1, const char *s2);
+int				ft_strcmp(const char *s1, const char *s2);
 
 
 

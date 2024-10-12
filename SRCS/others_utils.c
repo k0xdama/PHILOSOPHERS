@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:08:54 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 04:45:57 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/12 20:31:23 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ static	void	destroy_forks(t_data *data)
 	data->forks = NULL;
 }
 
+void	write_debug(t_data *data, char *str)
+{
+	pthread_t	thread_id = pthread_self();
+	pthread_mutex_lock(&data->write);
+	dprintf(2, "TH : %ld | %s\n", thread_id, str);
+	pthread_mutex_unlock(&data->write);
+}
+
 void	msg_err(char *err)
 {
 	printf("ERROR : %s\n", err);
@@ -45,10 +53,8 @@ void	msg_err(char *err)
 int	cleaner(t_data *data, int sim_exit_code, char *err)
 {
 	if (data->forks != NULL)
-	{
 		destroy_forks(data);
-		destroy_others_mutex(data);
-	}
+	destroy_others_mutex(data);
 	if (err != NULL)
 		msg_err(err);
 	if (sim_exit_code == FAILURE)

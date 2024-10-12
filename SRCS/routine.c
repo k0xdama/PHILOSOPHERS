@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/10 18:43:44 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/12 20:53:42 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	*philos_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	printf("is dead : %d", ((t_philo *)ptr)->is_dead);
-	printf("stop_flag : %d", philo->data->stop_flag);
+	write_debug(philo->data, "has been created !");
 	if (wait_other_threads(philo) == FAILURE)
 		return (philo->data->finished_th++, NULL);
+	write_debug(philo->data, "all thread has been detached");
 	starting_routine(philo);
 	if (philo->data->must_eat == 0)
 		return (philo->data->finished_th++, NULL);
