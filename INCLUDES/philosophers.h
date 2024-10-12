@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/10 18:28:53 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/12 04:45:34 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	bool			stop_flag;
-	t_philo			ph_tab[300];
+	t_philo			*ph_tab;
 	unsigned int	nb_philos;
 	unsigned int	initialized_th;
 	unsigned int	finished_th;
@@ -96,6 +96,7 @@ void			think(t_philo *ph);
 
 // UTILITAIRES //
 void			write_action(t_data *data, t_philo *ph, char *str);
+void			write_debug(t_data *data, char *str);
 unsigned int	get_timestamp(void);
 int				ft_isdigit(int c);
 int				ft_mini_atoi(const char *str);

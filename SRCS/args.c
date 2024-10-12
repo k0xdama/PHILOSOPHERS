@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 20:36:01 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/08 12:49:42 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/12 04:59:30 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	checks_args(char **argv)
 			if (ft_isdigit((int)argv[i][j]) == 2048)
 				j++;
 			else
-				return (-1);
+				return (FAILURE);
 		}
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }
