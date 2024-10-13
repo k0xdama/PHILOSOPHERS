@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 01:21:03 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 22:21:04 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	starting_routine(t_philo *philo)
 {
+	
 	pthread_mutex_lock(&philo->data->meal);
 	philo->last_meal = philo->data->start;
 	pthread_mutex_unlock(&philo->data->meal);
@@ -59,6 +60,9 @@ void	*philos_routine(void *ptr)
 	starting_routine(philo);
 	if (philo->data->must_eat == 0)
 		return (philo->data->finished_th++, NULL);
+	philo_debug(philo, "before loop");
+	// while (true)
+	// 	usleep(5);
 	while (philo->data->stop_flag != true)
 	{
 		philo_debug(philo, "before take first fork");

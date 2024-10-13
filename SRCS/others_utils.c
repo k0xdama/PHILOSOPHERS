@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:08:54 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 00:45:27 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 19:29:57 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	main_debug(t_data *data, char *str)
 {
 	pthread_t	thread_id = pthread_self();
 	pthread_mutex_lock(&data->write);
-	dprintf(2, "TH : %ld - ID : checker | %s\n", thread_id, str);
+	dprintf(2, "TH : %ld - ID : main | %s\n", thread_id, str);
 	pthread_mutex_unlock(&data->write);
 }
 

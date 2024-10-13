@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:19:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 01:28:53 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 19:37:09 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	think(t_philo *ph)
 {
 	write_action(ph->data, ph, PRINT_THINKING);
-	usleep(50);
+	usleep(500);
 }
 
 void	ft_dodo(t_philo *ph, unsigned int time)
