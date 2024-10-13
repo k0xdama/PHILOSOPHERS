@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:36:58 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 00:47:05 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static	int	wait_for_philos(t_checker *checker)
 			pthread_mutex_unlock(&checker->data->stop);
 			return (FAILURE);
 		}
+		pthread_mutex_unlock(&checker->data->stop);
 		usleep(500);
 	}
 	return (SUCCESS);
@@ -81,7 +82,7 @@ void	*checker_routine(void *ptr)
 	t_checker	*checker;
 
 	checker = (t_checker *)ptr;
-	write_debug(checker->data, "checker has been created !");
+	checker_debug(checker, "checker has been created !");
 	if (wait_for_philos(checker) == FAILURE)
 		return (checker->data->finished_th++, NULL);
 	while (true)

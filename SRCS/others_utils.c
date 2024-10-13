@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:08:54 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:31:23 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 00:45:27 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,28 @@ static	void	destroy_forks(t_data *data)
 	data->forks = NULL;
 }
 
-void	write_debug(t_data *data, char *str)
+void	main_debug(t_data *data, char *str)
 {
 	pthread_t	thread_id = pthread_self();
 	pthread_mutex_lock(&data->write);
-	dprintf(2, "TH : %ld | %s\n", thread_id, str);
+	dprintf(2, "TH : %ld - ID : checker | %s\n", thread_id, str);
 	pthread_mutex_unlock(&data->write);
+}
+
+void	checker_debug(t_checker *checker, char *str)
+{
+	pthread_t	thread_id = pthread_self();
+	pthread_mutex_lock(&checker->data->write);
+	dprintf(2, "TH : %ld - ID : checker | %s\n", thread_id, str);
+	pthread_mutex_unlock(&checker->data->write);
+}
+
+void	philo_debug(t_philo *philo, char *str)
+{
+	pthread_t	thread_id = pthread_self();
+	pthread_mutex_lock(&philo->data->write);
+	dprintf(2, "TH : %ld - ID : %u | %s\n", thread_id, philo->id, str);
+	pthread_mutex_unlock(&philo->data->write);
 }
 
 void	msg_err(char *err)

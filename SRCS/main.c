@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:37:37 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:16:48 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 00:45:35 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	void main_thread_waiting(t_data *data)
 			break;
 		}
 		pthread_mutex_unlock(&data->stop);
-		usleep(1000);
+		usleep(4000);
 	}
 }
 
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	if (detach_threads(&data, &checker, data.ph_tab) == FAILURE)
 		data.stop_reason = LAUNCH_ERROR;
 	main_thread_waiting(&data);
-	write_debug(&data, "main thread gonna exit");
+	main_debug(&data, "main thread gonna exit");
 	if (data.stop_reason == LAUNCH_ERROR)
 		return (cleaner(&data, FAILURE, NULL));
 	else

@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:53:42 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 01:21:03 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static	int	wait_other_threads(t_philo *philo)
 	pthread_mutex_lock(&philo->data->stop);
 	philo->data->initialized_th += 1;
 	pthread_mutex_unlock(&philo->data->stop);
+	philo_debug(philo, "has been initialized");
+	dprintf(2, "init th = %u\n", philo->data->initialized_th);
 	while (true)
 	{
 		pthread_mutex_lock(&philo->data->stop);
@@ -39,6 +41,7 @@ static	int	wait_other_threads(t_philo *philo)
 			pthread_mutex_unlock(&philo->data->stop);
 			return (FAILURE);
 		}
+		pthread_mutex_unlock(&philo->data->stop);
 		usleep(500);
 	}
 	return (SUCCESS);
@@ -49,23 +52,23 @@ void	*philos_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	write_debug(philo->data, "has been created !");
+	philo_debug(philo, "has been created !");
 	if (wait_other_threads(philo) == FAILURE)
 		return (philo->data->finished_th++, NULL);
-	write_debug(philo->data, "all thread has been detached");
+	philo_debug(philo, "all thread has been detached");
 	starting_routine(philo);
 	if (philo->data->must_eat == 0)
 		return (philo->data->finished_th++, NULL);
 	while (philo->data->stop_flag != true)
 	{
+		philo_debug(philo, "before take first fork");
 		pthread_mutex_lock(&philo->data->forks[philo->first_fork]);
 		write_action(philo->data, philo, PRINT_TOOK_FORK);
 		pthread_mutex_lock(&philo->data->forks[philo->second_fork]);
 		write_action(philo->data, philo, PRINT_TOOK_FORK);
 		eat(philo);
-		pthread_mutex_unlock(&philo->data->forks[philo->first_fork]);
-		pthread_mutex_unlock(&philo->data->forks[philo->second_fork]);
-		ft_dodo(philo, philo->data->tt_sleep);
+		ft_dodo(philo, philo->data->tt_eat);
+		think(philo);
 	}
 	return (philo->data->finished_th++, NULL);
 }

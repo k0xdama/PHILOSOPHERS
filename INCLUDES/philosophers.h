@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:48:13 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/10/13 00:45:51 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,9 @@ void			think(t_philo *ph);
 
 // UTILITAIRES //
 void			write_action(t_data *data, t_philo *ph, char *str);
-void			write_debug(t_data *data, char *str);
+void			main_debug(t_data *data, char *str);
+void			checker_debug(t_checker *checker, char *str);
+void			philo_debug(t_philo *philo, char *str);
 unsigned int	get_timestamp(void);
 int				ft_isdigit(int c);
 int				ft_mini_atoi(const char *str);
