@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/14 00:34:59 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/03 21:32:47 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,11 @@ static	int	wait_for_philos(t_checker *checker)
 	pthread_mutex_lock(&checker->data->stop);
 	checker->data->initialized_th += 1;
 	pthread_mutex_unlock(&checker->data->stop);
+	checker_debug(checker, "checker has been initialized");
+	// dprintf(2, "init th = %u\n", checker->data->initialized_th);
 	while (true)
 	{
+		dprintf(2, "1\n");
 		pthread_mutex_lock(&checker->data->stop);
 		if (checker->data->initialized_th == checker->data->nb_philos + 1)
 		{
@@ -86,7 +89,7 @@ static	int	wait_for_philos(t_checker *checker)
 			return (FAILURE);
 		}
 		pthread_mutex_unlock(&checker->data->stop);
-		usleep(500);
+		usleep((checker->data->nb_philos % 10) * 100);
 	}
 	return (SUCCESS);
 }

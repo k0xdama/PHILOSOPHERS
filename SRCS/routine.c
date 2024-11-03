@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 23:56:02 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/03 21:32:54 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static	int	wait_other_threads(t_philo *philo)
 	philo->data->initialized_th += 1;
 	pthread_mutex_unlock(&philo->data->stop);
 	philo_debug(philo, "has been initialized");
-	dprintf(2, "init th = %u\n", philo->data->initialized_th);
+	// dprintf(2, "init th = %u\n", philo->data->initialized_th);
 	while (true)
 	{
 		pthread_mutex_lock(&philo->data->stop);
@@ -44,7 +44,7 @@ static	int	wait_other_threads(t_philo *philo)
 			return (FAILURE);
 		}
 		pthread_mutex_unlock(&philo->data->stop);
-		usleep(500);
+		usleep(300 + (philo->id % 10) * 100);
 	}
 	return (SUCCESS);
 }
@@ -66,7 +66,7 @@ void	*philos_routine(void *ptr)
 	// 	usleep(5);
 	while (philo->data->stop_flag != true)
 	{
-		philo_debug(philo, "before take first fork");
+		// philo_debug(philo, "before take first fork");
 		pthread_mutex_lock(&philo->data->forks[philo->first_fork]);
 		write_action(philo->data, philo, PRINT_TOOK_FORK);
 		pthread_mutex_lock(&philo->data->forks[philo->second_fork]);
