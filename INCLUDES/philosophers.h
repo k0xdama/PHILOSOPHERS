@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 00:45:51 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 00:57:05 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	stop;
+	pthread_mutex_t	init_th;
+	pthread_mutex_t finish_th;
 	pthread_mutex_t	write;
 	size_t			start;
 }	t_data;
@@ -99,7 +101,7 @@ void			*checker_routine(void *ptr);
 
 //ACTIONS
 void			eat(t_philo *ph);
-void			ft_dodo(t_philo *philo, unsigned int time);
+void			ft_dodo(t_philo *ph, unsigned int time, bool print_action);
 void			think(t_philo *ph);
 
 // UTILITAIRES //
@@ -112,6 +114,8 @@ int				ft_isdigit(int c);
 int				ft_mini_atoi(const char *str);
 int				checks_args(char **argv);
 void			msg_err(char *err);
+void			*finish_philo(t_philo *philo);
+void			*finish_checker(t_checker *checker);
 int				cleaner(t_data *data, int sim_exit_code, char *err);
 
 // EXT_UTILS //

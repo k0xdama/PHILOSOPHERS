@@ -6,11 +6,27 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:08:54 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 19:29:57 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 00:52:56 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../INCLUDES/philosophers.h"
+
+void	*finish_philo(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->finish_th);
+	philo->data->finished_th++;
+	pthread_mutex_unlock(&philo->data->finish_th);
+	return (NULL);
+}
+
+void	*finish_checker(t_checker *checker)
+{
+	pthread_mutex_lock(&checker->data->finish_th);
+	checker->data->finished_th++;
+	pthread_mutex_unlock(&checker->data->finish_th);
+	return (NULL);
+}
 
 static	void	destroy_others_mutex(t_data *data)
 {

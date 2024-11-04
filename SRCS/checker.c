@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/03 21:32:47 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 00:58:57 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ static	void	monitor_time_to_die(t_checker *checker)
 
 static	int	wait_for_philos(t_checker *checker)
 {
-	pthread_mutex_lock(&checker->data->stop);
+	pthread_mutex_lock(&checker->data->init_th);
 	checker->data->initialized_th += 1;
-	pthread_mutex_unlock(&checker->data->stop);
+	pthread_mutex_unlock(&checker->data->init_th);
 	checker_debug(checker, "checker has been initialized");
 	// dprintf(2, "init th = %u\n", checker->data->initialized_th);
 	while (true)
@@ -116,7 +116,7 @@ void	*checker_routine(void *ptr)
 		if (checker->data->must_eat != -1)
 			monitor_meal_count(checker);
 	}
-	return (checker->data->finished_th++, NULL);
+	return (finish_checker(checker));
 }
 
 // ROUTINE DE SURVEILLANCE DE CHAQUE PHILO :

@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:50:14 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 00:57:24 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static 	int	init_others_mutex(t_data *data)
 	if (pthread_mutex_init(&data->write, NULL) != 0)
 		return (msg_err(ERR_INIT_MUTEX), FAILURE);
 	if (pthread_mutex_init(&data->stop, NULL) != 0)
+		return (msg_err(ERR_INIT_MUTEX), FAILURE);
+	if (pthread_mutex_init(&data->init_th, NULL) != 0)
+		return (msg_err(ERR_INIT_MUTEX), FAILURE);
+	if (pthread_mutex_init(&data->finish_th, NULL) != 0)
 		return (msg_err(ERR_INIT_MUTEX), FAILURE);
 	return (SUCCESS);
 }
@@ -45,6 +49,7 @@ static	int	create_forks(t_data *data)
 			data->forks = NULL;
 			return (msg_err(ERR_INIT_MUTEX), FAILURE);
 		}
+		main_debug(data, "a fork was created");
 		i++;
 	}
 	return (SUCCESS);

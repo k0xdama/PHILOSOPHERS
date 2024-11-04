@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:37:37 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 00:45:35 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 00:35:40 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	void main_thread_waiting(t_data *data)
 			break;
 		}
 		pthread_mutex_unlock(&data->stop);
-		usleep(4000);
+		usleep(10000);
 	}
 }
 
