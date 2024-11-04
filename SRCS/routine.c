@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 00:57:44 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 14:47:39 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static	int	wait_other_threads(t_philo *philo)
 	// dprintf(2, "init th = %u\n", philo->data->initialized_th);
 	while (true)
 	{
-		pthread_mutex_lock(&philo->data->stop);
+		pthread_mutex_lock(&philo->data->init_th);
 		if (philo->data->initialized_th == philo->data->nb_philos + 1)
 		{
-			pthread_mutex_unlock(&philo->data->stop);
+			pthread_mutex_unlock(&philo->data->init_th);
 			break;
 		}
+		pthread_mutex_unlock(&philo->data->init_th);
+		pthread_mutex_lock(&philo->data->stop);
 		if (philo->data->stop_flag == true)
 		{
 			pthread_mutex_unlock(&philo->data->stop);

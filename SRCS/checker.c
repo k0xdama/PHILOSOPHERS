@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 00:58:57 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 14:48:42 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,14 @@ static	int	wait_for_philos(t_checker *checker)
 	while (true)
 	{
 		dprintf(2, "1\n");
-		pthread_mutex_lock(&checker->data->stop);
+		pthread_mutex_lock(&checker->data->init_th);
 		if (checker->data->initialized_th == checker->data->nb_philos + 1)
 		{
-			pthread_mutex_unlock(&checker->data->stop);
+			pthread_mutex_unlock(&checker->data->init_th);
 			break;
 		}
+		pthread_mutex_unlock(&checker->data->init_th);
+		pthread_mutex_lock(&checker->data->stop);
 		if (checker->data->stop_flag == true)
 		{
 			pthread_mutex_unlock(&checker->data->stop);

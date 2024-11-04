@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:37:37 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 00:35:40 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 15:10:49 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@ static	void main_thread_waiting(t_data *data)
 {
 	while (true)
 	{
+		pthread_mutex_lock(&data->init_th);
+		pthread_mutex_lock(&data->finish_th);
 		pthread_mutex_lock(&data->stop);
 		if (data->stop_flag == true && data->finished_th == data->initialized_th)
 		{
+			pthread_mutex_unlock(&data->init_th);
+			pthread_mutex_unlock(&data->finish_th);
 			pthread_mutex_unlock(&data->stop);
 			break;
 		}
+		pthread_mutex_unlock(&data->init_th);
+		pthread_mutex_unlock(&data->finish_th);
 		pthread_mutex_unlock(&data->stop);
 		usleep(10000);
 	}
