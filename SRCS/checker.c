@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 14:48:42 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 22:10:27 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static	void	monitor_time_to_die(t_checker *checker)
 		pthread_mutex_lock(&checker->data->meal);
 		if (get_timestamp() >= checker->data->ph_tab[i].last_meal + checker->data->tt_die)
 		{
-			dprintf(2, "last meal = %u ; tt_die = %u\n", checker->data->ph_tab[i].last_meal, checker->data->tt_die);
+			// dprintf(2, "last meal = %u ; tt_die = %u\n", checker->data->ph_tab[i].last_meal, checker->data->tt_die);
 			pthread_mutex_unlock(&checker->data->meal);
 			kill(checker, &checker->ph_tab[i]);
 			break;

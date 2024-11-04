@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:39:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 20:30:07 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 20:34:40 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	write_action(t_data *data, t_philo *ph, char *str)
 	pthread_mutex_unlock(&data->write);
 }
 
-unsigned int	get_timestamp(void)
+size_t	get_timestamp(void)
 {
 	struct timeval	t;
 
@@ -31,6 +31,7 @@ unsigned int	get_timestamp(void)
 		printf("\"gettimeofday\" failed !\n");
 		return (0);
 	}
+	// printf("time qu'on get == %llu\n",  (unsigned long long)(t.tv_sec * 1000 + t.tv_usec / 1000));
 	return (t.tv_sec * 1000 + t.tv_usec / 1000);
 }
 //gestion d'erreur lors de la création des threads :

@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 00:57:05 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 22:21:43 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ typedef struct s_data
 	bool			checker_is_created;
 	unsigned int	initialized_th;
 	unsigned int	finished_th;
-	unsigned int	tt_die;
-	unsigned int	tt_eat;
-	unsigned int	tt_sleep;
+	size_t			tt_die;
+	size_t			tt_eat;
+	size_t			tt_sleep;
 	int				must_eat;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meal;
@@ -101,7 +101,7 @@ void			*checker_routine(void *ptr);
 
 //ACTIONS
 void			eat(t_philo *ph);
-void			ft_dodo(t_philo *ph, unsigned int time, bool print_action);
+void			ft_dodo(t_philo *ph, size_t time, bool print_action);
 void			think(t_philo *ph);
 
 // UTILITAIRES //
@@ -109,7 +109,7 @@ void			write_action(t_data *data, t_philo *ph, char *str);
 void			main_debug(t_data *data, char *str);
 void			checker_debug(t_checker *checker, char *str);
 void			philo_debug(t_philo *philo, char *str);
-unsigned int	get_timestamp(void);
+size_t			get_timestamp(void);
 int				ft_isdigit(int c);
 int				ft_mini_atoi(const char *str);
 int				checks_args(char **argv);

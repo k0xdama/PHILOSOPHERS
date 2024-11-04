@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 14:47:39 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/04 22:08:11 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	starting_routine(t_philo *philo)
 	philo_debug(philo, "start and last meal value");
 	pthread_mutex_lock(&philo->data->meal);
 	philo->last_meal = philo->data->start;
-	dprintf(2, "start = %lu ; lastmeal = %u\n", philo->data->start, philo->last_meal);
+	// dprintf(2, "start = %lu ; lastmeal = %u\n", philo->data->start, philo->last_meal);
 	pthread_mutex_unlock(&philo->data->meal);
 	if (philo->id % 2 == 1)
 		usleep(100);
