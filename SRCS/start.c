@@ -6,11 +6,11 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:33:49 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/13 22:23:41 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 18:29:10 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../INCLUDES/philosophers.h"
+#include "../INCLUDES/philosophers.h"
 
 int	detach_threads(t_data *data, t_checker *checker, t_philo *philos)
 {
@@ -53,12 +53,27 @@ static	int	create_philo(t_philo *philo)
 		return (SUCCESS);
 }
 
+void	set_last_meal(t_data *data)
+{
+	size_t		start;
+	size_t		i;
+
+	start = get_timestamp();
+	i = 0;
+	while (i < data->nb_philos)
+	{
+		data->ph_tab[i].last_meal = start;
+		i++;
+	}
+	return ;
+}
+
 int	start(t_data *data, t_checker *checker)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (i < data->nb_philos )
+	while (i < data->nb_philos)
 	{
 		if (create_philo(&data->ph_tab[i]) == FAILURE)
 		{
@@ -69,7 +84,8 @@ int	start(t_data *data, t_checker *checker)
 		}
 		data->created_philos_th++;
 		i++;
-	}		
+	}
+	set_last_meal(data);
 	if (create_checker(data, checker, data->ph_tab) == FAILURE)
 	{
 		pthread_mutex_lock(&data->stop);
@@ -77,6 +93,5 @@ int	start(t_data *data, t_checker *checker)
 		pthread_mutex_unlock(&data->stop);
 		return (FAILURE);
 	}
-	data->start = get_timestamp();
 	return (SUCCESS);
 }

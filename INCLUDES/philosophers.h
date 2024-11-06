@@ -6,12 +6,12 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/05 16:35:26 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 18:26:00 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
 # include <unistd.h>
 # include <stddef.h>
@@ -43,7 +43,7 @@
 # define PRINT_TOOK_FORK "has taken a fork"
 # define PRINT_DIED "died"
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
@@ -78,7 +78,7 @@ typedef struct s_data
 	pthread_mutex_t	stop;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	init_th;
-	pthread_mutex_t finish_th;
+	pthread_mutex_t	finish_th;
 	pthread_mutex_t	write;
 	size_t			start;
 }	t_data;
@@ -90,13 +90,14 @@ typedef struct s_checker
 	t_philo			*ph_tab;
 }	t_checker;
 
-
 // INITIALISATION //
-int				init_structs_and_philos(t_data *data, t_philo *philos_tab, int argc, char **argv);
+int				init_structs_and_philos(t_data *data, t_philo *philos_tab,
+					int argc, char **argv);
 
 // SIMULATION //
 int				start(t_data *data, t_checker *checker);
-int				detach_threads(t_data *data, t_checker *checker, t_philo *philos);
+int				detach_threads(t_data *data, t_checker *checker,
+					t_philo *philos);
 void			*philos_routine(void *ptr);
 void			*checker_routine(void *ptr);
 
@@ -121,9 +122,5 @@ int				cleaner(t_data *data, int sim_exit_code, char *err);
 
 // EXT_UTILS //
 int				ft_strcmp(const char *s1, const char *s2);
-
-
-
-
 
 #endif

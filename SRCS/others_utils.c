@@ -6,11 +6,11 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:08:54 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 00:52:56 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 18:40:48 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../INCLUDES/philosophers.h"
+#include "../INCLUDES/philosophers.h"
 
 void	*finish_philo(t_philo *philo)
 {
@@ -28,56 +28,37 @@ void	*finish_checker(t_checker *checker)
 	return (NULL);
 }
 
-static	void	destroy_others_mutex(t_data *data)
-{
-	pthread_mutex_destroy(&data->meal);
-	pthread_mutex_destroy(&data->write);
-	pthread_mutex_destroy(&data->stop);
-}
+// void	main_debug(t_data *data, char *str)
+// {
+// 	pthread_t	thread_id = pthread_self();
+// 	pthread_mutex_lock(&data->write);
+// 	dprintf(2, "TH : %ld - ID : main | %s\n", thread_id, str);
+// 	pthread_mutex_unlock(&data->write);
+// }
 
-static	void	destroy_forks(t_data *data)
-{
-	unsigned	int	i;
+// void	checker_debug(t_checker *checker, char *str)
+// {
+// 	pthread_t	thread_id = pthread_self();
+// 	pthread_mutex_lock(&checker->data->write);
+// 	dprintf(2, "TH : %ld - ID : checker | %s\n", thread_id, str);
+// 	pthread_mutex_unlock(&checker->data->write);
+// }
 
-	i = 0;
-	while (i < data->nb_philos)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
-	data->forks = NULL;
-}
-
-void	main_debug(t_data *data, char *str)
-{
-	pthread_t	thread_id = pthread_self();
-	pthread_mutex_lock(&data->write);
-	dprintf(2, "TH : %ld - ID : main | %s\n", thread_id, str);
-	pthread_mutex_unlock(&data->write);
-}
-
-void	checker_debug(t_checker *checker, char *str)
-{
-	pthread_t	thread_id = pthread_self();
-	pthread_mutex_lock(&checker->data->write);
-	dprintf(2, "TH : %ld - ID : checker | %s\n", thread_id, str);
-	pthread_mutex_unlock(&checker->data->write);
-}
-
-void	philo_debug(t_philo *philo, char *str)
-{
-	pthread_t	thread_id = pthread_self();
-	pthread_mutex_lock(&philo->data->write);
-	dprintf(2, "TH : %ld - ID : %u | %s\n", thread_id, philo->id, str);
-	pthread_mutex_unlock(&philo->data->write);
-}
+// void	philo_debug(t_philo *philo, char *str)
+// {
+// 	pthread_t	thread_id = pthread_self();
+// 	pthread_mutex_lock(&philo->data->write);
+// 	dprintf(2, "TH : %ld - ID : %u | %s\n", thread_id, philo->id, str);
+// 	pthread_mutex_unlock(&philo->data->write);
+// }
 
 void	msg_err(char *err)
 {
 	printf("ERROR : %s\n", err);
 	if (ft_strcmp(err, ERR_BAD_ARGS) == 0)
 	{
-		printf("Usage :\n./philo [nb_of_philosophers (200 max)] [time_to_die] [time_to_eat]");
+		printf("Usage :\n./philo [nb_of_philosophers (200 max)] ");
+		printf("[time_to_die] [time_to_eat]");
 		printf("[time_to_sleep] [number_of_times_each_philosopher_must_eat]\n");
 	}
 }

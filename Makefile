@@ -6,7 +6,7 @@
 #    By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/14 22:33:09 by pmateo            #+#    #+#              #
-#    Updated: 2024/10/24 19:17:54 by pmateo           ###   ########.fr        #
+#    Updated: 2024/11/06 09:10:10 by pmateo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ ${NAME}: ${OBJ} ${INCFILES}
 	${CC} ${FLAGS} -o ${NAME} ${OBJ} -I ${DIRINC_PHILO}
 
 all: ${NAME}
-		@echo "\033[1;5;32m# PHILOSOPHERS READY ! #\033[0m"
+		@echo "\033[1;5;32m# PHILOSOPHER READY ! #\033[0m"
 
 clean:
 		@${RM} ${OBJ} ${OBJ_BONUS}

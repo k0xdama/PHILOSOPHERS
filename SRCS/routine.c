@@ -6,11 +6,11 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:16:52 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/06 00:44:28 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 18:47:22 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../INCLUDES/philosophers.h"
+#include "../INCLUDES/philosophers.h"
 
 void	lone_philo(t_philo *philo)
 {
@@ -19,12 +19,7 @@ void	lone_philo(t_philo *philo)
 }
 
 void	starting_routine(t_philo *philo)
-{ 
-	// philo_debug(philo, "start and last meal value");
-	pthread_mutex_lock(&philo->data->meal);
-	philo->last_meal = philo->data->start;
-	// dprintf(2, "start = %lu ; lastmeal = %u\n", philo->data->start, philo->last_meal);
-	pthread_mutex_unlock(&philo->data->meal);
+{
 	if (philo->id % 2 == 1)
 		usleep(1000);
 }
@@ -34,15 +29,13 @@ static	int	wait_other_threads(t_philo *philo)
 	pthread_mutex_lock(&philo->data->init_th);
 	philo->data->initialized_th += 1;
 	pthread_mutex_unlock(&philo->data->init_th);
-	// philo_debug(philo, "has been initialized");
-	// dprintf(2, "init th = %u\n", philo->data->initialized_th);
 	while (true)
 	{
 		pthread_mutex_lock(&philo->data->init_th);
 		if (philo->data->initialized_th == philo->data->nb_philos + 1)
 		{
 			pthread_mutex_unlock(&philo->data->init_th);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&philo->data->init_th);
 		pthread_mutex_lock(&philo->data->stop);
@@ -62,13 +55,11 @@ void	*philos_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	philo_debug(philo, "has been created !");
 	if (wait_other_threads(philo) == FAILURE)
 		return (finish_philo(philo));
 	starting_routine(philo);
 	if (philo->data->must_eat == 0)
 		return (finish_philo(philo));
-	// dprintf(2, "%d | first = %d : second = %d\n", philo->id, philo->first_fork, philo->second_fork);
 	pthread_mutex_lock(&philo->data->stop);
 	while (philo->data->stop_flag != true)
 	{
@@ -80,16 +71,10 @@ void	*philos_routine(void *ptr)
 		pthread_mutex_lock(&philo->data->forks[philo->second_fork]);
 		write_action(philo->data, philo, PRINT_TOOK_FORK);
 		eat(philo);
-		ft_dodo(philo, philo->data->tt_eat, true);
+		ft_dodo(philo, philo->data->tt_sleep, true);
 		think(philo);
 		pthread_mutex_lock(&philo->data->stop);
 	}
 	pthread_mutex_unlock(&philo->data->stop);
 	return (finish_philo(philo));
 }
-
-
-//PREMIER TOUR ? PHILO TOUT SEUL ? TT_TO DIE à 0 ? NEED TO EAT à 0 ?
-
-// VERIFICATION QUE TOUT LES THREADS ONT ETE DETACHES AVANT DE COMMENCER LA SIMULATION ET QUE CHAQUE THREADS
-// COMMENCE SA ROUTINE

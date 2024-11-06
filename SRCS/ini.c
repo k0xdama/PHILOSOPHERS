@@ -6,56 +6,11 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/06 00:41:16 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 18:36:45 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/philosophers.h"
-
-static 	int	init_others_mutex(t_data *data)
-{
-	if (pthread_mutex_init(&data->meal, NULL) != 0)
-		return (msg_err(ERR_INIT_MUTEX), FAILURE);
-	if (pthread_mutex_init(&data->write, NULL) != 0)
-		return (msg_err(ERR_INIT_MUTEX), FAILURE);
-	if (pthread_mutex_init(&data->stop, NULL) != 0)
-		return (msg_err(ERR_INIT_MUTEX), FAILURE);
-	if (pthread_mutex_init(&data->dead, NULL) != 0)
-		return (msg_err(ERR_INIT_MUTEX), FAILURE);
-	if (pthread_mutex_init(&data->init_th, NULL) != 0)
-		return (msg_err(ERR_INIT_MUTEX), FAILURE);
-	if (pthread_mutex_init(&data->finish_th, NULL) != 0)
-		return (msg_err(ERR_INIT_MUTEX), FAILURE);
-	return (SUCCESS);
-}
-
-static	int	create_forks(t_data *data)
-{
-	int	i;
-	unsigned int 	nb_fork;
-	pthread_mutex_t	*forks_tab;
-
-	i = 0;
-	nb_fork = data->nb_philos;
-	forks_tab = malloc(nb_fork * sizeof(pthread_mutex_t));
-	if (forks_tab == NULL)
-		return (msg_err(ERR_MALLOC), FAILURE);
-	data->forks = forks_tab;
-	while (i < (int)data->nb_philos)
-	{
-		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-		{
-			while (i > 0)
-				pthread_mutex_destroy(&data->forks[i--]);
-			free(data->forks);
-			data->forks = NULL;
-			return (msg_err(ERR_INIT_MUTEX), FAILURE);
-		}
-		main_debug(data, "a fork was created");
-		i++;
-	}
-	return (SUCCESS);
-}
 
 static	int	fill_struct(t_data *data, int argc, char **argv)
 {
@@ -66,6 +21,27 @@ static	int	fill_struct(t_data *data, int argc, char **argv)
 	if (argc == 6)
 		data->must_eat = (unsigned int)ft_mini_atoi(argv[5]);
 	return (init_others_mutex(data));
+}
+
+static	void	give_forks(t_data *d)
+{
+	int	i;
+
+	i = 0;
+	while (i < d->nb_philos)
+	{
+		if (d->ph_tab[i].id % 2 == 0)
+		{
+			d->ph_tab[i].first_fork = d->ph_tab[i].id - 1;
+			d->ph_tab[i].second_fork = (d->ph_tab[i].id) % d->nb_philos;
+		}
+		else
+		{
+			d->ph_tab[i].first_fork = (d->ph_tab[i].id) % d->nb_philos;
+			d->ph_tab[i].second_fork = d->ph_tab[i].id - 1;
+		}
+		i++;
+	}
 }
 
 static	void	init_philos(t_data *d)
@@ -85,40 +61,32 @@ static	void	init_philos(t_data *d)
 		d->ph_tab[i].is_starving = false;
 		d->ph_tab[i].is_dead = false;
 		d->ph_tab[i].data = d;
-		if (d->ph_tab[i].id % 2 == 0)
-		{
-			d->ph_tab[i].first_fork = d->ph_tab[i].id - 1;
-			d->ph_tab[i].second_fork = (d->ph_tab[i].id) % d->nb_philos;
-		}
-		else
-		{
-			d->ph_tab[i].first_fork = (d->ph_tab[i].id) % d->nb_philos;
-			d->ph_tab[i].second_fork = d->ph_tab[i].id - 1;
-		}
 		i++;
 	}
+	give_forks(d);
 }
 
-int	init_structs_and_philos(t_data *data, t_philo *philos_tab, int argc, char **argv)
+int	init_structs_and_philos(t_data *d, t_philo *ph_tab, int argc, char **argv)
 {	
-	data->ph_tab = philos_tab;
-	data->stop_flag = false;
-	data->stop_reason = END;
-	data->nb_philos = 0;
-	data->created_philos_th = 0;
-	data->checker_is_created = false;
-	data->initialized_th = 0;
-	data->finished_th = 0;
-	data->tt_die = 0;
-	data->tt_eat = 0;
-	data->tt_sleep = 0;
-	data->must_eat = -1;
+	d->ph_tab = ph_tab;
+	d->stop_flag = false;
+	d->stop_reason = END;
+	d->nb_philos = 0;
+	d->created_philos_th = 0;
+	d->checker_is_created = false;
+	d->initialized_th = 0;
+	d->finished_th = 0;
+	d->tt_die = 0;
+	d->tt_eat = 0;
+	d->tt_sleep = 0;
+	d->must_eat = -1;
+	d->start = get_timestamp();
 	if (checks_args(argv) == FAILURE)
 		return (msg_err(ERR_BAD_ARGS), FAILURE);
-	if (fill_struct(data, argc, argv) == FAILURE)
-		return (cleaner(data, FAILURE, NULL));
-	init_philos(data);
-	if (create_forks(data) == FAILURE)
-		return (cleaner(data, FAILURE, NULL));
+	if (fill_struct(d, argc, argv) == FAILURE)
+		return (cleaner(d, FAILURE, NULL));
+	init_philos(d);
+	if (create_forks(d) == FAILURE)
+		return (cleaner(d, FAILURE, NULL));
 	return (SUCCESS);
 }

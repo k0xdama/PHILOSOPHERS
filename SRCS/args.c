@@ -6,11 +6,11 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 20:36:01 by pmateo            #+#    #+#             */
-/*   Updated: 2024/10/12 04:59:30 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 18:41:32 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../INCLUDES/philosophers.h"
+#include "../INCLUDES/philosophers.h"
 
 int	ft_isdigit(int c)
 {
@@ -41,7 +41,6 @@ int	checks_args(char **argv)
 	int	j;
 
 	i = 1;
-	
 	while (argv[i])
 	{
 		j = 0;
@@ -54,5 +53,9 @@ int	checks_args(char **argv)
 		}
 		i++;
 	}
+	if (ft_mini_atoi(argv[1]) > 200 || ft_mini_atoi(argv[1]) == 0)
+		return (FAILURE);
+	if (ft_mini_atoi(argv[2]) == 0)
+		return (FAILURE);
 	return (SUCCESS);
 }
