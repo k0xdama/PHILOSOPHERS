@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:06:59 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 22:10:27 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/05 21:31:25 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ static	void	monitor_meal_count(t_checker *checker)
 
 static	void	kill(t_checker *checker, t_philo *philo)
 {
+	// dprintf(2, "%s\n", __func__);
+	pthread_mutex_lock(&checker->data->dead);
 	pthread_mutex_lock(&checker->data->stop);
 	philo->is_dead = true;
 	checker->data->stop_flag = true;
+	pthread_mutex_unlock(&checker->data->dead);
 	pthread_mutex_unlock(&checker->data->stop);
 	write_action(checker->data, philo, PRINT_DIED);
+	// dprintf(2, "%s end\n", __func__);
 }
 
 static	void	monitor_time_to_die(t_checker *checker)
@@ -54,7 +58,7 @@ static	void	monitor_time_to_die(t_checker *checker)
 		pthread_mutex_lock(&checker->data->meal);
 		if (get_timestamp() >= checker->data->ph_tab[i].last_meal + checker->data->tt_die)
 		{
-			// dprintf(2, "last meal = %u ; tt_die = %u\n", checker->data->ph_tab[i].last_meal, checker->data->tt_die);
+			// dprintf(2, "%s | last meal = %lu ; tt_die = %lu\n", __func__, checker->data->ph_tab[i].last_meal, checker->data->tt_die);
 			pthread_mutex_unlock(&checker->data->meal);
 			kill(checker, &checker->ph_tab[i]);
 			break;
@@ -76,7 +80,6 @@ static	int	wait_for_philos(t_checker *checker)
 	// dprintf(2, "init th = %u\n", checker->data->initialized_th);
 	while (true)
 	{
-		dprintf(2, "1\n");
 		pthread_mutex_lock(&checker->data->init_th);
 		if (checker->data->initialized_th == checker->data->nb_philos + 1)
 		{

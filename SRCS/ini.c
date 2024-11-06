@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 00:57:24 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 00:41:16 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static 	int	init_others_mutex(t_data *data)
 	if (pthread_mutex_init(&data->write, NULL) != 0)
 		return (msg_err(ERR_INIT_MUTEX), FAILURE);
 	if (pthread_mutex_init(&data->stop, NULL) != 0)
+		return (msg_err(ERR_INIT_MUTEX), FAILURE);
+	if (pthread_mutex_init(&data->dead, NULL) != 0)
 		return (msg_err(ERR_INIT_MUTEX), FAILURE);
 	if (pthread_mutex_init(&data->init_th, NULL) != 0)
 		return (msg_err(ERR_INIT_MUTEX), FAILURE);
@@ -83,8 +85,16 @@ static	void	init_philos(t_data *d)
 		d->ph_tab[i].is_starving = false;
 		d->ph_tab[i].is_dead = false;
 		d->ph_tab[i].data = d;
-		d->ph_tab[i].first_fork = d->ph_tab[i].id;
-		d->ph_tab[i].second_fork = (d->ph_tab[i].id + 1) % d->nb_philos;
+		if (d->ph_tab[i].id % 2 == 0)
+		{
+			d->ph_tab[i].first_fork = d->ph_tab[i].id - 1;
+			d->ph_tab[i].second_fork = (d->ph_tab[i].id) % d->nb_philos;
+		}
+		else
+		{
+			d->ph_tab[i].first_fork = (d->ph_tab[i].id) % d->nb_philos;
+			d->ph_tab[i].second_fork = d->ph_tab[i].id - 1;
+		}
 		i++;
 	}
 }

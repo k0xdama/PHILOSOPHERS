@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/04 22:21:43 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/05 16:35:26 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_philo
 	int				id;
 	unsigned int	first_fork;
 	unsigned int	second_fork;
-	unsigned int	last_meal;
+	size_t			last_meal;
 	unsigned int	meals_count;
 	bool			eating;
 	bool			is_starving;
@@ -76,6 +76,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	stop;
+	pthread_mutex_t	dead;
 	pthread_mutex_t	init_th;
 	pthread_mutex_t finish_th;
 	pthread_mutex_t	write;
