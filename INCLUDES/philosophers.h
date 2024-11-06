@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:58:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/06 18:26:00 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 21:05:19 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,21 @@ void			ft_dodo(t_philo *ph, size_t time, bool print_action);
 void			think(t_philo *ph);
 
 // UTILITAIRES //
+int				create_forks(t_data *data);
+int				init_others_mutex(t_data *data);
 void			write_action(t_data *data, t_philo *ph, char *str);
 void			main_debug(t_data *data, char *str);
 void			checker_debug(t_checker *checker, char *str);
 void			philo_debug(t_philo *philo, char *str);
 size_t			get_timestamp(void);
 int				ft_isdigit(int c);
-int				ft_mini_atoi(const char *str);
+long			ft_mini_atoi(const char *str);
 int				checks_args(char **argv);
 void			msg_err(char *err);
 void			*finish_philo(t_philo *philo);
 void			*finish_checker(t_checker *checker);
+void			destroy_others_mutex(t_data *data);
+void			destroy_forks(t_data *data);
 int				cleaner(t_data *data, int sim_exit_code, char *err);
 
 // EXT_UTILS //

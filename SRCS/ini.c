@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:15:14 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/06 18:36:45 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 20:27:58 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	int	fill_struct(t_data *data, int argc, char **argv)
 
 static	void	give_forks(t_data *d)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < d->nb_philos)

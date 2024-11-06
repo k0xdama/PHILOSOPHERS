@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 03:08:54 by pmateo            #+#    #+#             */
-/*   Updated: 2024/11/06 18:39:29 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/11/06 20:42:08 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	destroy_forks(t_data *data)
 
 void	destroy_others_mutex(t_data *data)
 {
+	pthread_mutex_lock(&data->finish_th);
+	pthread_mutex_unlock(&data->finish_th);
 	pthread_mutex_destroy(&data->meal);
 	pthread_mutex_destroy(&data->write);
 	pthread_mutex_destroy(&data->stop);
